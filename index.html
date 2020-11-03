@@ -3,29 +3,57 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Rock, Paper, Scissors</title>
+  <title>Rock, Paper, Scissors!</title>
   <style>
 
   </style>
 </head>
 <body>
+<h1> Rock, Paper, Scissors!</h1>
+<div>Play a game, best of 5 wins!</div>
+</br>
+    <button id="rock">Rock</button> 
+    <button id="paper">Paper</button> 
+    <button id="scissors">Scissors</button> 
+</br>
+</br>
 
+
+
+<div id="container"></div>
+</br>
+<div id="messages"></div>
+</br>
+<div id="scores"></div>
+</br>
+<div id="finalscores"></div>
 
 <script>
 
-function game() {   // Best of 5 function
-        while ((computerWins < 3) && (playerWins < 3)) {
-            let computerSelection = computerPlay();
-            let playerSelection = playerPlay();
-            playRound(playerSelection, computerSelection)
-            console.log("Computer: " + computerWins + " | "+ playername +": " + playerWins)
-            }
-        if (computerWins > playerWins) {
-            console.log("Computer wins the game. Better luck next time!");
-        } else {
-            console.log("You win the game. Congratulations!");  
-            }
-     }
+const buttons = document.querySelectorAll('button');
+
+buttons.forEach((button) => {
+button.addEventListener('click', () => {
+    playerSelection = button.id;
+    let computerSelection = computerPlay();
+    playRound(playerSelection, computerSelection);
+    checkscores(playerWins, computerWins);
+
+
+});
+});
+
+function checkscores(playerWins, computerWins){
+ 
+if (computerWins == 3)  {
+finalscores.textContent = "Computer wins the game. Better luck next time!";
+} else if (playerWins == 3) {
+finalscores.textContent = "You win the game. Congratulations!";  
+}
+}
+
+
+
 
 function computerPlay() {   // Randomized computer choice
         let computerChoices = ["rock", "paper", "scissors"];
@@ -33,37 +61,41 @@ function computerPlay() {   // Randomized computer choice
         return computerChoices[random];
     }
 
-function playerPlay() {     // User input.
-        let choice = prompt("Choose rock, paper or scissors");
-        while ((choice.toLowerCase() != "rock") && (choice.toLowerCase() != "paper") && (choice.toLowerCase() != "scissors")){
-              choice = prompt("Try again");
-              }     
-        return choice.toLowerCase();
-    }
-function playRound(playerSelection, computerSelection) {  // Defining a single round of play
+
+function playRound(playerSelection, computerSelection) {  // Defining a single round of play. I pick first all cases in wich PC wins, then tie, the player wins.
+
+
+
+
         if (playerSelection == "rock" && computerSelection == "paper") {
-            console.log("Computer picked " + computerSelection);
-            console.log("Computer wins this round");
-            return ++computerWins;
+            container.textContent = "Computer picked " + computerSelection +".";
+            messages.textContent = "Computer wins this round.";
+            computerWins = computerWins +1;
+            scores.textContent = "Computer: " + computerWins + " | "+ playername +": " + playerWins;
             
        } else if (playerSelection == "paper" && computerSelection == "scissors") {
-            console.log("Computer picked " + computerSelection);
-            console.log("Computer wins this round");
-            return ++computerWins;
+        container.textContent = "Computer picked " + computerSelection+".";
+            messages.textContent = "Computer wins this round.";
+
+            scores.textContent = "Computer: " + computerWins + " | "+ playername +": " + playerWins;
+            computerWins = computerWins +1;
+            scores.textContent = "Computer: " + computerWins + " | "+ playername +": " + playerWins;
             
        } else if (playerSelection == "scissors" && computerSelection == "rock") {
-            console.log("Computer picked " + computerSelection);
-            console.log("Computer wins this round");
-            return ++computerWins;
+            container.textContent = "Computer picked " + computerSelection+".";
+            messages.textContent = "Computer wins this round.";
+            computerWins = computerWins +1;computerWins;
+            scores.textContent = "Computer: " + computerWins + " | "+ playername +": " + playerWins;
             
        } else if (playerSelection == computerSelection) {
-            console.log("Computer picked " + computerSelection);
-            return console.log("It's a TIE!");
+            container.textContent = "Computer picked " + computerSelection+".";
+            messages.textContent = "It's a TIE!";
             
        } else {
-            console.log("Computer picked " + computerSelection);
-            console.log("Point for you! Nice!");
-            return ++playerWins;
+            container.textContent = "Computer picked " + computerSelection+".";
+            messages.textContent = "Point for you! Nice!";
+            playerWins = playerWins +1;
+            scores.textContent = "Computer: " + computerWins + " | "+ playername +": " + playerWins;
             }
     }
 
@@ -72,9 +104,8 @@ function playRound(playerSelection, computerSelection) {  // Defining a single r
     let playerSelection;
     let computerWins = 0;
     let playerWins = 0;
-    console.log("Let's play rock, paper, scissors--best out of five.");
     let playername = prompt ("What is your name?");
-    console.log(game());
+    
   </script>
 </body>
 </html>
